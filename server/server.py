@@ -50,10 +50,6 @@ class NoteAPI(MethodView):
         notes_manager.create_note(note_data)
 
     @request_wrapper
-    def put(self, note_data: dict):
-        notes_manager.update_note(note_data)
-
-    @request_wrapper
     def delete(self, note_id):
         notes_manager.delete_note(int(note_id))
 
