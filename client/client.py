@@ -4,13 +4,13 @@ import requests
 from datetime import datetime
 
 from constants import HELP_MESSAGE, WRONG_COMMAND, WRONG_COMMAND_ARGUMENTS, CREATE_HEAD_MESSAGE, CREATE_BODY_MESSAGE, \
-    NOTE_DOES_NOT_EXIST, SUCCESSFUL_DELETE, SCRIPT_EXIT
+    NOTE_DOES_NOT_EXIST, SUCCESSFUL_DELETE, SCRIPT_EXIT, SURE_EXIT
 
 
 def get_script_execution_parser():
     parser = ArgumentParser()
     parser.add_argument('--host', default='localhost')
-    parser.add_argument('-p', '--port', default='8000', type=int)
+    parser.add_argument('-p', '--port', default=8000, type=int)
 
     return parser
 
@@ -28,10 +28,10 @@ class NotesCommandsManager:
 
     @staticmethod
     def exit():
-        print(SCRIPT_EXIT)
-        exit(0)
-
-    quit = exit
+        confirm_answer = input(SURE_EXIT)
+        if confirm_answer.lower() in ['yes', 'y', 'да', 'д']:
+            print(SCRIPT_EXIT)
+            exit(0)
 
     def create(self):
         data = {
@@ -41,13 +41,13 @@ class NotesCommandsManager:
         self._execute_request('POST', 'note', data=data)
 
     def show(self, note_id=None):
-        if not note_id:
+        if note_id is None:
             notes = self._execute_request('GET', 'notes')['value']
             print(f'Найдено {len(notes)} заметок')
             for note in notes:
                 date = datetime.fromtimestamp(note['date'])
                 date_str = date.strftime("%d.%m %H:%M")
-                print('{:<3} {}  {}'.format(note['id'], date_str,  note['name']))
+                print('{:<3} {}  {}'.format(note['id'], date_str, note['name']))
 
         else:
             response = self._execute_request('GET', 'note', str(note_id))
@@ -90,7 +90,7 @@ def main():
     commands_manager.help()
     while True:
         try:
-            print('Введиде команду: ', end='')
+            print('Введите команду: ', end='')
 
             command_items = input().split()
             command = command_items[0]
