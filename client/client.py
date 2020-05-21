@@ -4,13 +4,13 @@ import requests
 from datetime import datetime
 
 from constants import HELP_MESSAGE, WRONG_COMMAND, WRONG_COMMAND_ARGUMENTS, CREATE_HEAD_MESSAGE, CREATE_BODY_MESSAGE, \
-    NOTE_DOES_NOT_EXIST, SUCCESSFUL_DELETE, SCRIPT_EXIT, SURE_EXIT
+    NOTE_DOES_NOT_EXIST, SUCCESSFUL_DELETE, SCRIPT_EXIT, SURE_EXIT, DEFAULT_PORT, DEFAULT_HOST
 
 
 def get_script_execution_parser():
     parser = ArgumentParser()
-    parser.add_argument('--host', default='localhost')
-    parser.add_argument('-p', '--port', default=8000, type=int)
+    parser.add_argument('--host', default=DEFAULT_HOST)
+    parser.add_argument('-p', '--port', default=DEFAULT_PORT, type=int)
 
     return parser
 

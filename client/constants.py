@@ -1,3 +1,5 @@
+DEFAULT_HOST = 'localhost'
+DEFAULT_PORT = 8000
 
 WRONG_COMMAND = "Введена некорректная команда"
 WRONG_COMMAND_ARGUMENTS = "Неверные аргументы для команды"
