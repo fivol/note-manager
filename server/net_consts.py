@@ -1,3 +1,4 @@
+
 DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = 8000
 DEFAULT_PROTOCOL = 'http'
@@ -5,5 +6,5 @@ DEFAULT_PROTOCOL = 'http'
 RESPONSE_FAIL_STATUS = 'fail'
 RESPONSE_SUCCESS_STATUS = 'ok'
 
-ONE_NOTE_PATH = 'note'
-MANY_NOTES_PATH = 'notes'
+ONE_NOTE_PATH = '/note/'
+MANY_NOTES_PATH = '/notes/'

@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, request
 from flask.views import MethodView
+
 from notes_manager import NotesManager
 from functools import wraps
 from time import time
 from traceback import print_exc
 from argparse import ArgumentParser
+from net_consts import *
 
 app = Flask(__name__)
 
@@ -29,7 +31,7 @@ def request_wrapper(func):
 
         response_object = {
             'processing_time': round(time() - in_time, 3),
-            'status': 'fail' if response_failed else 'ok',
+            'status': RESPONSE_FAIL_STATUS if response_failed else RESPONSE_SUCCESS_STATUS,
             'value': response
         }
         return jsonify(response_object)
@@ -56,15 +58,15 @@ class NoteAPI(MethodView):
 
 note_view = NoteAPI.as_view('note_api')
 
-app.add_url_rule('/notes/', view_func=note_view, methods=['GET'])
-app.add_url_rule('/note/', view_func=note_view, methods=['POST', 'PUT'])
-app.add_url_rule('/note/<int:note_id>/', view_func=note_view, methods=['GET', 'DELETE'])
+app.add_url_rule(f'{MANY_NOTES_PATH}', view_func=note_view, methods=['GET'])
+app.add_url_rule(f'{ONE_NOTE_PATH}', view_func=note_view, methods=['POST', 'PUT'])
+app.add_url_rule(f'{ONE_NOTE_PATH}<int:note_id>/', view_func=note_view, methods=['GET', 'DELETE'])
 
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument('--host', default='localhost')
-    parser.add_argument('--port', default=8000, type=int)
+    parser.add_argument('--host', default=DEFAULT_HOST)
+    parser.add_argument('--port', default=DEFAULT_PORT, type=int)
     command_line_args = parser.parse_args()
     host = command_line_args.host
     port = command_line_args.port
