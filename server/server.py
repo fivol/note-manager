@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request
 from flask.views import MethodView
-
-from notes_manager import NotesManager
 from functools import wraps
 from time import time
 from traceback import print_exc
 from argparse import ArgumentParser
+
+from notes_manager import NotesManager
 from net_consts import *
+
 
 app = Flask(__name__)
 
