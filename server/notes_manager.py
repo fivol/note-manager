@@ -1,5 +1,5 @@
 from datetime import datetime
-from database import NoteModel
+from server.database import NoteModel
 
 
 def get_current_time():
@@ -45,7 +45,6 @@ class NotesManager:
 
     def create_note(self, note_data: dict):
         note_data['date'] = get_current_time()
-        print(note_data)
         self.storage.create(note_data)
 
     def delete_note(self, note_id):

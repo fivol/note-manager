@@ -32,3 +32,5 @@ MANY_NOTES_FORMAT = '{id:<3} {date}  {name}'
 ONE_NOTE_DATE_FORMAT = "%A, %d %B %Y %H:%M"
 ONE_NOTE_FORMAT = 'Номер: {id}\nСоздано: {date}\n{name}\n{body}'
 
+START_MESSAGE_FORMAT = 'Host: {host}, port: {port}'
+

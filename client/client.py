@@ -2,7 +2,7 @@ import json
 from argparse import ArgumentParser
 import requests
 from datetime import datetime
-import consts
+from client import consts
 import net_consts
 
 
@@ -51,8 +51,8 @@ class NotesCommandsManager:
                 )
 
         else:
-            response = self._execute_request('GET', 'note', str(note_id))
-            if response['status'] == 'fail':
+            response = self._execute_request('GET', net_consts.ONE_NOTE_PATH, str(note_id))
+            if response['status'] == net_consts.RESPONSE_FAIL_STATUS:
                 print(consts.NOTE_DOES_NOT_EXIST)
             else:
                 note = response['value']
@@ -63,14 +63,14 @@ class NotesCommandsManager:
                 )
 
     def delete(self, note_id):
-        response = self._execute_request('DELETE', 'note', str(note_id))
+        response = self._execute_request('DELETE', net_consts.ONE_NOTE_PATH, str(note_id))
         if response['status'] == net_consts.RESPONSE_FAIL_STATUS:
             print(consts.NOTE_DOES_NOT_EXIST)
         else:
             print(consts.SUCCESSFUL_DELETE)
 
     def _execute_request(self, method, *args, data=None):
-        request_url = self.base_url + '/'.join(args) + '/'
+        request_url = self.base_url + '/'.join(args)
         if method in ['GET', 'POST', 'DELETE']:
             try:
                 return getattr(requests, method.lower())(request_url, json=data).json()
@@ -88,7 +88,7 @@ def main():
     script_parser = get_script_execution_parser()
     script_args = script_parser.parse_args()
 
-    print(f'Host: {script_args.host}, port: {script_args.port}')
+    print(consts.START_MESSAGE_FORMAT.format(host=script_args.host, port=script_args.port))
     commands_manager = NotesCommandsManager(script_args.host, script_args.port)
     commands_manager.help()
     while True:
